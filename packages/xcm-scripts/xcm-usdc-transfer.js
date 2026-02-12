@@ -134,7 +134,7 @@ async function connectWithTimeout(promise, ms) {
 
 async function connectApi() {
   const reconnectMs = 8000;
-  const connectTimeoutMs = 20000;
+  const connectTimeoutMs = 35000;
   for (const endpoint of WS_ENDPOINTS) {
     try {
       console.log("Connecting to", endpoint, "...");
@@ -149,6 +149,11 @@ async function connectApi() {
       if (WS_ENDPOINTS.indexOf(endpoint) < WS_ENDPOINTS.length - 1) {
         console.log("Trying next endpoint...");
       } else {
+        console.error("\n--- All public RPCs failed. Workarounds: ---");
+        console.error("1. Run Chopsticks locally: cd chopsticks && npm run xcm:asset-hub-only");
+        console.error("   Then: WS_ENDPOINT=ws://127.0.0.1:8000 npm run xcm-transfer");
+        console.error("2. Use Pop Onboarding: https://onpop.io/network/onboard (bridge PAS manually)");
+        console.error("3. Check firewall/VPN — some networks block WebSocket to these RPCs.");
         throw e;
       }
     }

@@ -24,6 +24,8 @@ npm run xcm-transfer
 
 If you have PAS on **Paseo Asset Hub** (from the faucet), run against testnet so the sender can pay fees:
 
+> **Public RPCs timing out?** Use [Pop Onboarding](https://onpop.io/network/onboard) to bridge PAS in the browser instead.
+
 ```bash
 cd packages/xcm-scripts
 
@@ -42,7 +44,11 @@ The script will **prompt you for `SENDER_SEED`** (hidden input) if you don’t s
 
 Use the same `SENDER_SEED` as the account you funded on Paseo. No need to run Chopsticks.
 
-**If the connection drops with "1006 Abnormal Closure"** — public Paseo RPCs can be unstable (rate limits, network). This is external, not fixable in-script. **Workarounds:** (1) Run Chopsticks locally: `cd chopsticks && npm run xcm:asset-hub-only`, then `WS_ENDPOINT=ws://127.0.0.1:8000` (fund sender via dev_setStorage). (2) Use [Pop Onboarding UI](https://onpop.io/network/onboard) to bridge PAS manually.
+**If connection fails (timeout, 1006 Abnormal Closure)** — public Paseo RPCs can be unstable or blocked by your network/firewall. **Workarounds:**
+
+1. **[Pop Onboarding](https://onpop.io/network/onboard)** — Bridge PAS manually in the browser. No CLI needed.
+2. **Chopsticks** (local testing): `cd chopsticks && npm run xcm:asset-hub-only`, then `WS_ENDPOINT=ws://127.0.0.1:8000` (fund sender via dev_setStorage). Note: Chopsticks forks mainnet (DOT), not Paseo (PAS).
+3. **Different network** — Try mobile hotspot; some networks block WebSocket to these RPCs.
 
 **If relay transfers fail (Filtered / LocalExecutionIncompleteWithError)** — XCM reached the destination but execution failed (often HRMP/channel config). Try in order: (1) `XCM_METHOD=reserve`, (2) `DEST_PARA_ID=4001` (Pop, Paseo), (3) [Pop Onboarding UI](https://onpop.io/network/onboard). Hydration (2034) is mainnet only.
 
