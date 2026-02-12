@@ -103,6 +103,8 @@ export function Header() {
         <NavLink to="/features" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Features</NavLink>
         <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
         <NavLink to="/bridge" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Bridge</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
+        <NavLink to="/security" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Security</NavLink>
       </div>
     </header>
   );

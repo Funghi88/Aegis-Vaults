@@ -34,6 +34,7 @@ Built for the OpenGuild × Web3 Foundation Hackathon (Stablecoin track). Reduces
 | **Earn Max Yield** | One-click XCM link to best destination; route to DeFi app. |
 | **XCM Builder** | Configure destination, amount, recipient; copy CLI or **Execute XCM** in-browser (Polkadot extension). |
 | **Features** | AI Oracle, One-Click Route, AI Guardian overview. |
+| **Security** | How we protect you; what to do to safeguard your assets. |
 | **Bridge** | Link to Polkadot.js Apps for XCM and cross-chain transfers. |
 
 **Requirements:** MetaMask (EVM) for vault; Polkadot extension (Talisman, Polkadot.js) for in-browser XCM.

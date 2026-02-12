@@ -12,6 +12,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Features } from "./components/Features";
 import { Footer } from "./components/Footer";
 import { GetStarted } from "./components/GetStarted";
+import { SecurityPage } from "./components/SecurityPage";
 
 function HomePage() {
   return (
@@ -68,6 +69,7 @@ export default function App() {
               <Route path="/earn" element={<EarnMaxYield />} />
               <Route path="/xcm" element={<XCMBuilder />} />
               <Route path="/features" element={<Features />} />
+              <Route path="/security" element={<SecurityPage />} />
               <Route path="/bridge" element={<BridgePage />} />
             </Routes>
               </main>
