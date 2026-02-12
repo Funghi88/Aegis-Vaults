@@ -11,7 +11,7 @@ Reference for AegisVault deployment and integration (agent, frontend).
 
 **Revive status:** pallet_revive is experimental. As of 2025, it may not be on public Asset Hub Paseo. Use a local substrate-revive-node or wait for mainnet. See `deploy:revive` script.
 
-**Guardian** is the address allowed to call `flashRepay(user, amount)` and `setGuardian(newGuardian)`. Document the guardian key for the AI Agent (LangChain tool) so it can sign rebalance transactions.
+**Guardian** is the address allowed to call `flashRepay(user, amount)` and `setGuardian(newGuardian)`. Use a **multisig** (2-of-3 or 3-of-5) for production — set `GUARDIAN_ADDRESS` to the multisig contract address. Document the guardian address for the AI Agent (LangChain tool) so it can propose rebalance transactions; execution requires the multisig threshold.
 
 **To update:** After deploy, paste the printed addresses into the table above. Same chain applies for both rows (Polkadot Hub TestNet).
 

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useGasSavings } from "../hooks/useGasSavings";
 
 export function Hero() {
+  const { savedUsd } = useGasSavings();
   return (
     <section
       style={{
@@ -66,7 +68,12 @@ export function Hero() {
               Polkadot.js Apps
             </a>
           </div>
-          <div className="hero-badges" style={{ marginTop: "2rem", display: "flex", gap: "1.5rem", color: "var(--muted)", fontSize: "0.8rem", fontWeight: 300, letterSpacing: "0.04em" }}>
+          <div className="hero-badges" style={{ marginTop: "2rem", display: "flex", gap: "1.5rem", color: "var(--muted)", fontSize: "0.8rem", fontWeight: 300, letterSpacing: "0.04em", flexWrap: "wrap", alignItems: "center" }}>
+            {savedUsd != null && (
+              <span style={{ background: "var(--accent-bg)", color: "var(--accent)", padding: "0.4rem 0.75rem", borderRadius: 4, fontWeight: 500 }}>
+                Saved ${savedUsd.toLocaleString()} in gas fees this week
+              </span>
+            )}
             <a href="https://polkadot.network" target="_blank" rel="noopener noreferrer" className="link-hover" style={{ color: "inherit", textDecoration: "none" }}>Built on Polkadot</a>
             <a href="https://polkadot.network/ecosystem" target="_blank" rel="noopener noreferrer" className="link-hover" style={{ color: "inherit", textDecoration: "none" }}>Asset Hub</a>
             <a href="https://wiki.polkadot.network/docs/learn-xcm" target="_blank" rel="noopener noreferrer" className="link-hover" style={{ color: "inherit", textDecoration: "none" }}>XCM Powered</a>

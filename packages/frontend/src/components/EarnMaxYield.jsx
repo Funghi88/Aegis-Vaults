@@ -44,10 +44,15 @@ export function EarnMaxYield() {
             <p style={{ color: "var(--muted)" }}>Loading best yield...</p>
           ) : selected ? (
             <>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
                 <span className="accent-box">Live</span>
+                {isBest && (
+                  <span style={{ padding: "0.25rem 0.5rem", background: "rgba(80,180,80,0.2)", color: "#28a745", fontSize: "0.75rem", fontWeight: 500, borderRadius: 4 }}>
+                    AI Recommended
+                  </span>
+                )}
                 <span style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--muted)", letterSpacing: "0.04em" }}>
-                  Best destination
+                  {isBest ? "Best APY destination" : "Alternative"}
                 </span>
               </div>
               <h3 style={{ fontSize: "2rem", fontWeight: 400, color: "var(--dark)", marginBottom: "0.5rem" }}>
@@ -118,7 +123,7 @@ export function EarnMaxYield() {
                   cursor: "pointer",
                 }}
               >
-                {y.name}: {(Number(y.apy) || 0).toFixed(2)}%
+                {y.name}: {(Number(y.apy) || 0).toFixed(2)}%{best?.name === y.name ? " ★" : ""}
               </button>
             ))}
           </div>

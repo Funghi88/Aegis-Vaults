@@ -1,0 +1,17 @@
+{
+  "name": "@aegis-vaults/sdk",
+  "version": "0.1.0",
+  "description": "SDK for Aegis Vaults - vault operations, XCM, yield routing",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": ["src", "README.md"],
+  "scripts": {},
+  "peerDependencies": {
+    "ethers": "^6.0.0"
+  },
+  "keywords": ["polkadot", "defi", "vault", "xcm", "aegis"],
+  "license": "MIT"
+}

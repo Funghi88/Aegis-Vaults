@@ -268,6 +268,9 @@ export function VaultFlow() {
 
   const healthNum = Number(healthPercent) || 0;
   const guardianStatus = healthNum >= 150 ? "OK" : healthNum > 0 ? "At Risk" : null;
+  // Risk scoring: Low (>=200%), Medium (150-200%), High (<150%)
+  const displayHealth = hasPreview && previewHealthRaw != null ? previewHealthRaw : healthNum;
+  const riskTier = displayHealth >= 200 ? "Low" : displayHealth >= 150 ? "Medium" : displayHealth > 0 ? "High" : null;
 
   if (!address) {
     return (
@@ -354,6 +357,21 @@ export function VaultFlow() {
                     ? (previewHealth >= 1000 ? previewHealth.toFixed(0) : previewHealth.toFixed(1)) + "%"
                     : (healthPercent ?? "—") + "%"}
                 </p>
+                {riskTier && (
+                  <p style={{ fontSize: "0.75rem", fontWeight: 500, marginBottom: "0.5rem" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "0.2rem 0.5rem",
+                        borderRadius: 4,
+                        background: riskTier === "Low" ? "rgba(80,180,80,0.2)" : riskTier === "Medium" ? "rgba(220,160,0,0.2)" : "rgba(200,80,80,0.2)",
+                        color: riskTier === "Low" ? "#28a745" : riskTier === "Medium" ? "#b8860b" : "#c00",
+                      }}
+                    >
+                      Risk: {riskTier}
+                    </span>
+                  </p>
+                )}
                 {hasPreview && <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontWeight: 300 }}>Preview</p>}
                 {guardianStatus && (
                   <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: "1px solid rgba(0,0,0,0.06)" }}>

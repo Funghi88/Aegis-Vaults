@@ -1,6 +1,8 @@
 import { useYields } from "../hooks/useYields";
 import { useWallet } from "../hooks/useWallet";
 import { useVault } from "../hooks/useVault";
+import { useGasSavings } from "../hooks/useGasSavings";
+import { BenchmarkTable } from "./BenchmarkTable";
 import { NATIVE_TOKEN } from "../config";
 
 function formatWei(wei) {
@@ -13,6 +15,7 @@ export function Dashboard() {
   const { yields, best, loading, error } = useYields();
   const { address, connect } = useWallet();
   const { collateral, debt, healthPercent, loading: vaultLoading, error: vaultError } = useVault(address);
+  const { savedUsd, loading: gasLoading } = useGasSavings();
 
   const balanceValue =
     vaultLoading && address
@@ -52,12 +55,14 @@ export function Dashboard() {
         <Card title="Your Balance" value={balanceValue} subtitle={balanceSubtitle} accent="var(--accent)" delay="0.1s" onSubtitleClick={!address ? connect : undefined} />
         <Card title="Optimized Yield" value={best ? `${(Number(best.apy) || 0).toFixed(2)}%` : "—"} subtitle={best ? best.name : loading ? "Loading..." : "—"} accent="var(--accent)" delay="0.2s" />
         <Card title="Current Yield" value={yields[1] ? `${(Number(yields[1].apy) || 0).toFixed(2)}%` : best ? `${(Number(best.apy) || 0).toFixed(2)}%` : "—"} subtitle={yields[1] ? yields[1].name : "Best available"} accent="var(--accent)" delay="0.3s" />
+        <Card title="Gas Savings" value={gasLoading ? "…" : savedUsd != null ? `$${savedUsd.toLocaleString()}` : "—"} subtitle="Saved vs Ethereum L1 this week" accent="var(--accent)" delay="0.4s" />
       </div>
       {error && (
         <p style={{ color: "var(--muted)", fontWeight: 300, fontSize: "0.85rem", marginTop: "1rem", textAlign: "center" }}>
           Using fallback APY data
         </p>
       )}
+      <BenchmarkTable />
     </section>
   );
 }

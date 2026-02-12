@@ -1,5 +1,7 @@
 # Aegis Vaults
 
+Polkadot DeFi: vault (deposit, mint, repay, withdraw), XCM routing, Earn Max Yield. Monorepo: frontend, contracts, XCM scripts, agent, SDK.
+
 **Self-driving money on Polkadot.** Intent-based yield optimizer + self-managing stablecoin vault for the Polkadot Asset Hub.
 
 Built for the OpenGuild × Web3 Foundation Hackathon (Stablecoin track). Reduces **~12 Clicks to Yield** and activates **$450M+ fragmented TVL** by combining Revive/PVM vaults, an AI Guardian (risk/rebalance), and an AI Oracle that routes liquidity via XCM to the highest safe yield.
@@ -60,6 +62,7 @@ aegis-vaults/
 ├── packages/
 │   ├── contracts/     # Solidity vault (AegisVault, AegisVaultDemo) + deploy
 │   ├── frontend/      # React + Vite UI
+│   ├── sdk/           # @aegis-vaults/sdk — vault ops for dApps & bots
 │   └── xcm-scripts/   # XCM transfer (ReserveTransferAssets) from Asset Hub
 ├── chopsticks/        # Local XCM fork (Asset Hub)
 ├── agent/             # AI Oracle, vault monitor, flashRepay
