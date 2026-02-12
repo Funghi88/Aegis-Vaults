@@ -12,6 +12,8 @@ const DEST_OPTIONS = [
   { id: 2034, label: "HydraDX" },
 ];
 
+const DEST_LABELS = { 0: "Relay", 4001: "Pop", 2004: "Moonbeam", 2006: "Astar", 2030: "Bifrost", 2034: "HydraDX" };
+
 export function XCMBuilder() {
   const [searchParams] = useSearchParams();
   const destFromUrl = searchParams.get("dest");
@@ -23,6 +25,7 @@ export function XCMBuilder() {
     disconnectPolkadot,
     executeXCM,
     loading: xcmLoading,
+    xcmStatus,
     error: xcmError,
     setError: setXcmError,
   } = useXCMExecute();
@@ -42,6 +45,8 @@ export function XCMBuilder() {
     }
     if (amountFromUrl) setAmount(amountFromUrl);
   }, [destFromUrl, amountFromUrl]);
+
+  const destLabel = DEST_OPTIONS.find((o) => o.id === destParaId)?.label?.split(" ")[0] || DEST_LABELS[destParaId] || `Para ${destParaId}`;
 
   const copyCli = () => {
     const cmd = `DEST_PARA_ID=${destParaId} AMOUNT=${amount} RECIPIENT_SS58=${recipient || "<your-ss58>"} npm run xcm-transfer`;
@@ -137,9 +142,19 @@ export function XCMBuilder() {
                     {xcmLoading ? "Check wallet popup…" : "Execute XCM"}
                   </button>
                   {xcmLoading && (
-                    <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.5rem" }}>
-                      Look for Talisman/Polkadot.js window — it may be behind this tab.
-                    </p>
+                    <div style={{ marginTop: "1rem", padding: "0.75rem 1rem", background: "var(--accent-bg)", border: "1px solid var(--accent)", borderRadius: 4 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                        <span style={{ animation: "pulse 1.5s ease-in-out infinite", fontSize: "0.75rem" }}>●</span>
+                        <span style={{ fontSize: "0.85rem", fontWeight: 500, color: "var(--dark)" }}>
+                          Asset Hub → {destLabel}
+                        </span>
+                      </div>
+                      <p style={{ fontSize: "0.75rem", color: "var(--muted)", margin: 0 }}>
+                        {xcmStatus === "signing" && "Sign in Talisman/Polkadot.js — popup may be behind this tab."}
+                        {xcmStatus === "inBlock" && "Transaction in block…"}
+                        {xcmStatus === "finalized" && "Finalized!"}
+                      </p>
+                    </div>
                   )}
                   <button
                     onClick={disconnectPolkadot}

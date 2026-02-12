@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       style={{
-        padding: "3rem 1.5rem 6rem",
+        padding: "3rem 1.5rem 10rem",
         background: "var(--light)",
       }}
     >

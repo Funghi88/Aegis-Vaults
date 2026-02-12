@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { StatusBanner } from "./components/StatusBanner";
 import { Hero } from "./components/Hero";
 import { TopYieldDestinations } from "./components/TopYieldDestinations";
+import { ComparisonTable } from "./components/ComparisonTable";
 import { EarnMaxYield } from "./components/EarnMaxYield";
 import { VaultFlow } from "./components/VaultFlow";
 import { XCMBuilder } from "./components/XCMBuilder";
@@ -18,6 +19,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <ComparisonTable />
       <TopYieldDestinations />
     </>
   );

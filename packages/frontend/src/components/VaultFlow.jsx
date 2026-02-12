@@ -401,6 +401,20 @@ export function VaultFlow() {
             Connect MetaMask and switch to the correct network (Chain ID {CHAIN_ID}) to deposit or mint.
           </p>
         ) : (
+          <>
+            {(depositPending || mintPending || repayPending || withdrawPending || flashRepayPending) && (
+              <div style={{ maxWidth: 560, margin: "0 auto 1rem", padding: "0.75rem 1rem", background: "var(--accent-bg)", border: "1px solid var(--accent)", borderRadius: 4, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ animation: "pulse 1.5s ease-in-out infinite", fontSize: "0.75rem" }}>●</span>
+                <span style={{ fontSize: "0.85rem", color: "var(--dark)", fontWeight: 500 }}>
+                  {depositPending && "Deposit pending…"}
+                  {mintPending && !depositPending && "Mint pending…"}
+                  {repayPending && !depositPending && !mintPending && "Repay pending…"}
+                  {withdrawPending && !depositPending && !mintPending && !repayPending && "Withdraw pending…"}
+                  {flashRepayPending && !depositPending && !mintPending && !repayPending && !withdrawPending && "Flash Repay pending…"}
+                </span>
+                <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>Confirm in MetaMask</span>
+              </div>
+            )}
           <div className="fade-up card-hover" style={{ maxWidth: 560, margin: "0 auto", padding: "2.5rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)" }}>
             <div style={{ display: "grid", gap: "1.25rem" }}>
               <div>
@@ -536,6 +550,7 @@ export function VaultFlow() {
             </div>
             {txError && <p style={{ color: "#c00", fontSize: "0.85rem", marginTop: "1rem" }}>{txError}</p>}
           </div>
+          </>
         )}
       </div>
     </section>
