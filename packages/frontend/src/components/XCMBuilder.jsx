@@ -166,7 +166,7 @@ export function XCMBuilder() {
             {xcmError && <p style={{ color: "#c00", fontSize: "0.85rem", marginTop: "0.5rem" }}>{xcmError}</p>}
           </div>
           <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "1.5rem" }}>
-            Requires <code>SENDER_SEED</code> (mnemonic) or run interactively. For native PAS teleport from Asset Hub.
+            Execute XCM: Connect Polkadot (Talisman, Polkadot.js) — extension popup will sign. CLI: requires <code>SENDER_SEED</code> or run interactively. Native PAS teleport from Asset Hub.
           </p>
         </div>
       </div>

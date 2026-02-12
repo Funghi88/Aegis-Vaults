@@ -96,7 +96,14 @@ export function useXCMExecute() {
         weightLimit
       );
 
+      // Re-enable extension so popup can appear (handles refresh/lock)
+      await web3Enable(APP_NAME);
       const injector = await web3FromAddress(polkadotAddress);
+      if (!injector?.signer) {
+        setLoading(false);
+        setError("Wallet signer not found. Try disconnecting and reconnecting, or unlock your Polkadot extension.");
+        return null;
+      }
 
       return new Promise((resolve, reject) => {
         tx.signAndSend(polkadotAddress, { signer: injector.signer }, ({ status, txHash }) => {
