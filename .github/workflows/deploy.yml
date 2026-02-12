@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
 
+# Prevent concurrent deploys
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pages: write
@@ -31,6 +36,9 @@ jobs:
           cd packages/frontend
           npm ci
           npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
