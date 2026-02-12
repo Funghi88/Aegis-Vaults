@@ -46,9 +46,12 @@ function BridgePage() {
   );
 }
 
+/** Base path for GitHub Pages (e.g. /Aegis-Vaults); empty for Vercel/root. */
+const basename = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename || undefined}>
       <ToastProvider>
         <VaultRefreshProvider>
           <div className="app-layout">
