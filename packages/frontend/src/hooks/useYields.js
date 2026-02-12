@@ -42,22 +42,30 @@ export function useYields() {
         const dests = poolsToDestinations(data);
         if (!cancelled) {
           setYields(dests.sort((a, b) => b.apy - a.apy));
+          setError(null);
         }
       } catch (e) {
         if (!cancelled) {
           setError(e.message);
-          setYields([
-            { name: "Moonbeam", apy: 4.5, url: "https://apps.moonbeam.network", paraId: 2004 },
-            { name: "HydraDX", apy: 3.8, url: "https://app.hydradx.io", paraId: 2034 },
-            { name: "Astar", apy: 3.2, url: "https://app.astar.network", paraId: 2006 },
-          ]);
+          setYields((prev) =>
+            prev.length > 0 ? prev : [
+              { name: "Moonbeam", apy: 4.5, url: "https://apps.moonbeam.network", paraId: 2004 },
+              { name: "HydraDX", apy: 3.8, url: "https://app.hydradx.io", paraId: 2034 },
+              { name: "Astar", apy: 3.2, url: "https://app.astar.network", paraId: 2006 },
+            ]
+          );
         }
       } finally {
         if (!cancelled) setLoading(false);
       }
     }
     fetchYields();
-    return () => (cancelled = true);
+    const POLL_MS = 120000; // 2 min — DefiLlama updates periodically
+    const id = setInterval(fetchYields, POLL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
   }, []);
 
   const best = yields[0] || null;

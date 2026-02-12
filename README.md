@@ -67,7 +67,16 @@ aegis-vaults/
 
 ---
 
+## Security
+
+- **Non-custodial:** You retain control. MetaMask/Polkadot extension sign transactions; no keys in the app.
+- **Contract:** Reentrancy guard, 150% health factor, user-only withdrawals. Guardian can flashRepay for at-risk positions.
+- **Site:** No private keys; security headers on Vercel. See [docs/SECURITY.md](docs/SECURITY.md).
+
+---
+
 ## Links
 
 - [docs/contracts.md](docs/contracts.md) — ABIs, addresses, guardian
+- [docs/SECURITY.md](docs/SECURITY.md) — Security overview
 - Polkadot Asset Hub, Revive, Paseo testnet — see official Polkadot docs

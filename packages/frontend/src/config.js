@@ -1,6 +1,6 @@
 /** Vault & chain config. Replace with your deployed address and RPC after deploy. */
 export const VAULT_ADDRESS =
-  import.meta.env.VITE_VAULT_ADDRESS || "0xBa9Fa63E2F9E776f7F08371FeC95dD1FCd34E137";
+  import.meta.env.VITE_VAULT_ADDRESS || "0x75dCb05352872D1d5359C9E9121Ebee26Fff232f";
 
 /** pUSD token address (when vault has stablecoin set). Optional - frontend also reads from vault.stablecoin(). */
 export const PUSD_ADDRESS = import.meta.env.VITE_PUSD_ADDRESS || null;

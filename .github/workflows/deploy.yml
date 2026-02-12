@@ -32,8 +32,8 @@ jobs:
       - name: Install and build
         env:
           VITE_BASE_PATH: /Aegis-Vaults/
-          VITE_VAULT_ADDRESS: "0xBa9Fa63E2F9E776f7F08371FeC95dD1FCd34E137"
-          VITE_PUSD_ADDRESS: "0x11a8cAAD58BedBCbe0471d0dDf64516624d66279"
+          VITE_VAULT_ADDRESS: "0x75dCb05352872D1d5359C9E9121Ebee26Fff232f"
+          VITE_PUSD_ADDRESS: "0xD308a63F43f186263e5736Ae72cfFD04c33BD2e9"
           VITE_VAULT_TYPE: full
           VITE_RPC_URL: https://services.polkadothub-rpc.com/testnet
           VITE_CHAIN_ID: "420420417"

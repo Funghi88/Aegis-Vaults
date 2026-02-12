@@ -6,7 +6,7 @@ Reference for AegisVault deployment and integration (agent, frontend).
 
 | Network                    | Runtime | AegisVault | pUSD | Guardian (constructor) |
 |----------------------------|---------|------------|------|------------------------|
-| Polkadot Hub TestNet (Paseo) | REVM    | 0xBa9Fa63E2F9E776f7F08371FeC95dD1FCd34E137 | 0x11a8cAAD58BedBCbe0471d0dDf64516624d66279 | *(paste from deploy output)* |
+| Polkadot Hub TestNet (Paseo) | REVM    | 0x75dCb05352872D1d5359C9E9121Ebee26Fff232f | 0xD308a63F43f186263e5736Ae72cfFD04c33BD2e9 | *(paste from deploy output)* |
 | Revive (local)             | PVM     | 0xa44639cd0d0e6c6607491088c9c549e184456122 | — | 0x8eaf... (call initializeGuardian) |
 
 **Revive status:** pallet_revive is experimental. As of 2025, it may not be on public Asset Hub Paseo. Use a local substrate-revive-node or wait for mainnet. See `deploy:revive` script.

@@ -87,6 +87,10 @@ export function GetStarted() {
         <p style={{ color: "var(--muted)", fontWeight: 300, fontSize: "0.85rem", marginTop: "2rem", textAlign: "center" }}>
           <strong>Requirements:</strong> MetaMask for Vault; Polkadot extension (Talisman, Polkadot.js) for in-browser XCM.
         </p>
+        <p style={{ color: "var(--muted)", fontWeight: 300, fontSize: "0.8rem", marginTop: "0.5rem", textAlign: "center" }}>
+          <strong>Security:</strong> Non-custodial — your keys, your crypto. No private keys on our site. See{" "}
+          <a href="https://github.com/Funghi88/Aegis-Vaults/blob/main/docs/SECURITY.md" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "underline" }}>SECURITY.md</a>.
+        </p>
       </div>
     </section>
   );

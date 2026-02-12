@@ -123,6 +123,7 @@ contract AegisVault {
         uint256 d = debt[msg.sender];
         if (d == 0) revert InsufficientDebt();
         if (amount > d) amount = d;
+        if (amount > totalDebt) amount = totalDebt; // Defensive: prevent underflow if totalDebt out of sync
         debt[msg.sender] = d - amount;
         totalDebt -= amount;
         if (stablecoin != address(0)) {
@@ -141,6 +142,7 @@ contract AegisVault {
         uint256 d = debt[user];
         if (d == 0) revert InsufficientDebt();
         if (amount > d) amount = d;
+        if (amount > totalDebt) amount = totalDebt; // Defensive: prevent underflow if totalDebt out of sync (e.g. REVM edge case)
         debt[user] = d - amount;
         totalDebt -= amount;
         if (stablecoin != address(0)) {
