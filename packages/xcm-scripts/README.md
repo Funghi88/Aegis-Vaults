@@ -24,7 +24,7 @@ npm run xcm-transfer
 
 If you have PAS on **Paseo Asset Hub** (from the faucet), run against testnet so the sender can pay fees:
 
-> **Public RPCs timing out?** Use [Pop Onboarding](https://onpop.io/network/onboard) to bridge PAS in the browser instead.
+> **Public RPCs timing out?** Use [Polkadot.js Apps](https://polkadot.js.org/apps) (Developer → Extrinsics → polkadotXcm) or [Faucet](https://faucet.polkadot.io) for PAS.
 
 ```bash
 cd packages/xcm-scripts
@@ -46,11 +46,11 @@ Use the same `SENDER_SEED` as the account you funded on Paseo. No need to run Ch
 
 **If connection fails (timeout, 1006 Abnormal Closure)** — public Paseo RPCs can be unstable or blocked by your network/firewall. **Workarounds:**
 
-1. **[Pop Onboarding](https://onpop.io/network/onboard)** — Bridge PAS manually in the browser. No CLI needed.
+1. **[Polkadot.js Apps](https://polkadot.js.org/apps)** — Connect to Asset Hub Paseo, Developer → Extrinsics → polkadotXcm.limitedTeleportAssets.
 2. **Chopsticks** (local testing): `cd chopsticks && npm run xcm:asset-hub-only`, then `WS_ENDPOINT=ws://127.0.0.1:8000` (fund sender via dev_setStorage). Note: Chopsticks forks mainnet (DOT), not Paseo (PAS).
 3. **Different network** — Try mobile hotspot; some networks block WebSocket to these RPCs.
 
-**If relay transfers fail (Filtered / LocalExecutionIncompleteWithError)** — XCM reached the destination but execution failed (often HRMP/channel config). Try in order: (1) `XCM_METHOD=reserve`, (2) `DEST_PARA_ID=4001` (Pop, Paseo), (3) [Pop Onboarding UI](https://onpop.io/network/onboard). Hydration (2034) is mainnet only.
+**If relay transfers fail (Filtered / LocalExecutionIncompleteWithError)** — XCM reached the destination but execution failed (often HRMP/channel config). Try in order: (1) `XCM_METHOD=reserve`, (2) `DEST_PARA_ID=4001` (Pop, Paseo), (3) [Polkadot.js Apps](https://polkadot.js.org/apps) extrinsics. Hydration (2034) is mainnet only.
 
 **If you get "1002 Verification Error" / "unreachable"** — set `DEST_PARA_ID` to a chain that exists on your network (e.g. 2034 Hydration, 4001 Pop on Paseo; 2004 Moonbeam on mainnet). Check [Paseo Subscan](https://paseo.subscan.io/) for Paseo parachains.
 
@@ -77,7 +77,7 @@ Relay transfers (`DEST_PARA_ID=0`) often fail on Paseo testnet. Use a parachain 
 
 | DEST_PARA_ID | Chain | Network |
 |--------------|-------|---------|
-| 4001 | Pop Network | Paseo (may sunset; use [onboard](https://onpop.io/network/onboard) as fallback) |
+| 4001 | Pop Network | Paseo |
 | 2034 | Hydration | Mainnet only |
 | 0 | Relay | Often fails on Paseo |
 
@@ -95,7 +95,7 @@ XCM_METHOD=reserve npm run xcm-transfer
 
 ## If XCM still fails
 
-Paseo testnet XCM can fail with `LocalExecutionIncompleteWithError` (HRMP channels, destination config). The script parses this and prints specific guidance. **Fallback:** use the [Pop Onboarding UI](https://onpop.io/network/onboard) to bridge PAS from Asset Hub to Pop. The script detects execution failure and exits 1 instead of falsely reporting success.
+Paseo testnet XCM can fail with `LocalExecutionIncompleteWithError` (HRMP channels, destination config). The script parses this and prints specific guidance. **Fallback:** use [Polkadot.js Apps](https://polkadot.js.org/apps) (Developer → Extrinsics → polkadotXcm) to run XCM manually. The script detects execution failure and exits 1 instead of falsely reporting success.
 
 ## Error: 1010 "Inability to pay some fees" / balance too low
 

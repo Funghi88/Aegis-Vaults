@@ -30,16 +30,16 @@ function BridgePage() {
           Bridge to Polkadot
         </h2>
         <p style={{ color: "var(--muted)", fontWeight: 300, marginTop: "1rem", marginBottom: "2rem" }}>
-          Use Pop Network to bridge assets across Polkadot parachains.
+          Use Polkadot.js Apps for XCM and cross-chain transfers.
         </p>
         <a
-          href="https://onpop.io/network/onboard"
+          href="https://polkadot.js.org/apps"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary"
           style={{ display: "inline-block", padding: "1rem 2.5rem", background: "var(--dark)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer", textDecoration: "none" }}
         >
-          Open Pop Onboarding
+          Open Polkadot.js Apps
         </a>
       </div>
     </section>

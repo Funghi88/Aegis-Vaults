@@ -18,8 +18,8 @@ export function Footer() {
           GitHub
         </a>
         {" · "}
-        <a href="https://onpop.io/network/onboard" target="_blank" rel="noopener noreferrer" className="link-hover" style={{ color: "var(--accent)" }}>
-          Pop Bridge
+        <a href="https://polkadot.js.org/apps" target="_blank" rel="noopener noreferrer" className="link-hover" style={{ color: "var(--accent)" }}>
+          Polkadot.js Apps
         </a>
       </p>
     </footer>

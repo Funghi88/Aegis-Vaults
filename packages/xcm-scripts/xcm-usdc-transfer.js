@@ -152,7 +152,7 @@ async function connectApi() {
         console.error("\n--- All public RPCs failed. Workarounds: ---");
         console.error("1. Run Chopsticks locally: cd chopsticks && npm run xcm:asset-hub-only");
         console.error("   Then: WS_ENDPOINT=ws://127.0.0.1:8000 npm run xcm-transfer");
-        console.error("2. Use Pop Onboarding: https://onpop.io/network/onboard (bridge PAS manually)");
+        console.error("2. Use Polkadot.js Apps: https://polkadot.js.org/apps (Developer → Extrinsics → polkadotXcm)");
         console.error("3. Check firewall/VPN — some networks block WebSocket to these RPCs.");
         throw e;
       }
@@ -277,10 +277,10 @@ async function main() {
             console.error("   Try in order:");
             console.error("   1. XCM_METHOD=reserve npm run xcm-transfer");
             console.error("   2. Different DEST_PARA_ID: 4001 (Pop, Paseo) or 2034 (Hydration, mainnet only)");
-            console.error("   3. Fallback: Pop Onboarding UI: https://onpop.io/network/onboard");
+            console.error("   3. Fallback: Polkadot.js Apps https://polkadot.js.org/apps → polkadotXcm extrinsics");
           } else {
             console.error("   Try: XCM_METHOD=reserve npm run xcm-transfer");
-            console.error("   Or use Pop onboarding UI: https://onpop.io/network/onboard");
+            console.error("   Or use Polkadot.js Apps: https://polkadot.js.org/apps");
           }
           process.exit(1);
         }

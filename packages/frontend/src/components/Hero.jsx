@@ -62,8 +62,8 @@ export function Hero() {
             <Link to="/earn" className="btn-primary" style={{ padding: "1rem 2rem", background: "var(--dark)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none" }}>
               Earn Max Yield
             </Link>
-            <a href="https://onpop.io/network/onboard" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "1rem 2rem", background: "transparent", color: "var(--dark)", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "1px solid var(--dark)" }}>
-              Bridge to Pop
+            <a href="https://polkadot.js.org/apps" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "1rem 2rem", background: "transparent", color: "var(--dark)", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "1px solid var(--dark)" }}>
+              Polkadot.js Apps
             </a>
           </div>
           <div className="hero-badges" style={{ marginTop: "2rem", display: "flex", gap: "1.5rem", color: "var(--muted)", fontSize: "0.8rem", fontWeight: 300, letterSpacing: "0.04em" }}>

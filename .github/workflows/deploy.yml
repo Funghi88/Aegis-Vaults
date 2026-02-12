@@ -32,6 +32,7 @@ jobs:
       - name: Install and build
         env:
           VITE_BASE_PATH: /Aegis-Vaults/
+          VITE_VAULT_TYPE: full
         run: |
           cd packages/frontend
           npm ci

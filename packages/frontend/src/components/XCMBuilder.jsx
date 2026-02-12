@@ -159,13 +159,13 @@ export function XCMBuilder() {
                 </button>
               )}
               <a
-                href="https://onpop.io/network/onboard"
+                href="https://polkadot.js.org/apps"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
                 style={{ padding: "1rem 2rem", background: "var(--accent)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer", textDecoration: "none" }}
               >
-                Use Pop Onboarding
+                Open Polkadot.js Apps
               </a>
             </div>
             {xcmError && <p style={{ color: "#c00", fontSize: "0.85rem", marginTop: "0.5rem" }}>{xcmError}</p>}

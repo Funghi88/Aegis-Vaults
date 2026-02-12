@@ -289,7 +289,7 @@ export function VaultFlow() {
             Deposit & Mint
           </h2>
           <p style={{ color: "var(--muted)", fontWeight: 300, marginTop: "0.75rem", fontSize: "0.95rem" }}>
-            Deposit collateral, mint debt. Health must stay above 150% (AegisVault) or 100% (demo).
+            Deposit collateral, mint debt. Health must stay above 150% to withdraw.
           </p>
         </div>
 

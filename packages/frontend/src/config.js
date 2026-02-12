@@ -3,7 +3,7 @@ export const VAULT_ADDRESS =
   import.meta.env.VITE_VAULT_ADDRESS || "0xa44639cd0d0e6c6607491088c9c549e184456122";
 
 /** Vault type: "full" = AegisVault (repay, withdraw); "demo" = AegisVaultDemo (no repay/withdraw). */
-export const VAULT_TYPE = (import.meta.env.VITE_VAULT_TYPE || "demo").toLowerCase();
+export const VAULT_TYPE = (import.meta.env.VITE_VAULT_TYPE || "full").toLowerCase();
 export const VAULT_HAS_REPAY = VAULT_TYPE === "full";
 export const VAULT_HAS_WITHDRAW = VAULT_TYPE === "full";
 

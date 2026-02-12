@@ -38,7 +38,7 @@ export function TopYieldDestinations() {
             {yields.slice(0, 5).map((y, i) => (
               <Link
                 key={y.name}
-                to="/earn"
+                to={y.paraId != null ? `/earn?dest=${y.paraId}` : "/earn"}
                 className="fade-up card-hover"
                 style={{
                   display: "flex",
