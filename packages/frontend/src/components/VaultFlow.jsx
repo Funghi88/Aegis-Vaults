@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Contract, BrowserProvider, parseEther } from "ethers";
 import { useWallet } from "../hooks/useWallet";
 import { useVault } from "../hooks/useVault";
+import { useWalletBalance } from "../hooks/useWalletBalance";
 import { useToast } from "../context/ToastContext";
 import { useVaultRefresh } from "../context/VaultRefreshContext";
 import { VAULT_ADDRESS, RPC_URL, CHAIN_ID, NATIVE_TOKEN, VAULT_HAS_REPAY, VAULT_HAS_WITHDRAW } from "../config";
@@ -51,6 +52,7 @@ async function ensureChain() {
 export function VaultFlow() {
   const { address, connect } = useWallet();
   const { collateral, debt, healthPercent, loading, refetch, guardian, stablecoin } = useVault(address);
+  const { nativeBalance, pusdBalance, loading: walletLoading, refetch: refetchWallet } = useWalletBalance(address, stablecoin);
   const hasPUSD = !!stablecoin;
   const { success, error: toastError } = useToast();
   const { triggerRefresh } = useVaultRefresh();
@@ -118,6 +120,12 @@ export function VaultFlow() {
 
   const handleMint = async () => {
     if (!canTransact || !mintAmount) return;
+    const amt = parseFloat(mintAmount) || 0;
+    if (amt > maxMint) {
+      setTxError(`Max mint: ${maxMint.toFixed(2)} ${hasPUSD ? "pUSD" : "debt"}. Add more collateral or mint less to keep health ≥ 150%.`);
+      toastError(`Max mint: ${maxMint.toFixed(2)}`);
+      return;
+    }
     setTxError(null);
     setMintPending(true);
     try {
@@ -139,8 +147,12 @@ export function VaultFlow() {
       success("Mint successful");
     } catch (e) {
       console.error(e);
-      setTxError(e.message || "Mint failed");
-      toastError(e.message || "Mint failed");
+      const msg = e.message || "Mint failed";
+      const friendly = msg.includes("e247bc92") || msg.includes("UnhealthyPosition")
+        ? `Mint would make position unhealthy. Add more collateral or mint less to keep health ≥ 150%. Max: ${maxMint.toFixed(2)} ${hasPUSD ? "pUSD" : "debt"}.`
+        : msg;
+      setTxError(friendly);
+      toastError(friendly);
     } finally {
       setMintPending(false);
     }
@@ -185,6 +197,12 @@ export function VaultFlow() {
   const maxWithdraw = debtNum > 0
     ? Math.max(0, collNum - debtNum * minRatio)
     : collNum;
+
+  // Max mint: must keep health >= 150% => collateral / (debt + mint) >= 1.5 => mint <= collateral/1.5 - debt
+  const maxMint = collNum > 0
+    ? Math.max(0, collNum / minRatio - debtNum)
+    : 0;
+  const mintWouldBeUnhealthy = mintNum > 0 && previewHealthRaw != null && previewHealthRaw < 150;
 
   const handleWithdraw = async () => {
     if (!canTransact || !withdrawAmount || !VAULT_HAS_WITHDRAW) return;
@@ -308,13 +326,24 @@ export function VaultFlow() {
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
               <button
                 type="button"
-                onClick={() => { refetch(); triggerRefresh(); }}
+                onClick={() => { refetch(); refetchWallet(); triggerRefresh(); }}
                 style={{ fontSize: "0.75rem", color: "var(--muted)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
               >
                 Refresh balance
               </button>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: hasPreview ? "0.5rem" : "2rem" }}>
+              <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.05s" }}>
+                <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Wallet (remaining)</p>
+                <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
+                  {walletLoading ? "…" : formatWei(nativeBalance)} {NATIVE_TOKEN}
+                </p>
+                {hasPUSD && (
+                  <p style={{ fontSize: "0.9rem", fontWeight: 400, color: "var(--dark)" }}>
+                    {walletLoading ? "…" : formatWei(pusdBalance)} pUSD
+                  </p>
+                )}
+              </div>
               <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.1s" }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Collateral</p>
                 <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
@@ -364,7 +393,7 @@ export function VaultFlow() {
 
         {!canTransact ? (
           <p style={{ color: "var(--muted)", fontSize: "0.9rem", textAlign: "center" }}>
-            Connect MetaMask and switch to Hardhat Local (Chain ID {CHAIN_ID}) to deposit or mint.
+            Connect MetaMask and switch to the correct network (Chain ID {CHAIN_ID}) to deposit or mint.
           </p>
         ) : (
           <div className="fade-up card-hover" style={{ maxWidth: 560, margin: "0 auto", padding: "2.5rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)" }}>
@@ -397,10 +426,13 @@ export function VaultFlow() {
                   onChange={(e) => setMintAmount(e.target.value)}
                   style={{ width: "100%", padding: "0.75rem 1rem", border: "1px solid rgba(0, 0, 0, 0.15)", fontSize: "1rem", fontFamily: "inherit" }}
                 />
+                {debtNum >= 0 && collNum > 0 && (
+                  <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.25rem" }}>Max: {maxMint.toFixed(2)} {hasPUSD ? "pUSD" : "debt"} (health must stay ≥ 150%)</p>
+                )}
               </div>
               <button
                 onClick={handleMint}
-                disabled={mintPending || !mintAmount}
+                disabled={mintPending || !mintAmount || mintWouldBeUnhealthy}
                 className="btn-primary"
                 style={{ padding: "1rem 2rem", background: "var(--dark)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
               >

@@ -74,7 +74,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Nav bar — dark, single horizontal line at bottom only */}
+      {/* Nav bar — dark, single horizontal line at bottom only; scroll horizontally on narrow viewports */}
       <div
         className="header-nav-bar"
         style={{
@@ -84,27 +84,29 @@ export function Header() {
           alignItems: "center",
           justifyContent: "center",
           gap: "0",
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
+          overflowX: "auto",
+          minWidth: 0,
           borderBottom: "2px solid var(--text)",
         }}
       >
-        <NavLink to="/" end className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Home</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/get-started" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Get started</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/dashboard" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Dashboard</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/vault" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Vault</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/earn" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Earn Max Yield</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/xcm" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>XCM</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/features" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Features</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/bridge" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Bridge</NavLink>
-        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
-        <NavLink to="/security" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Security</NavLink>
+        <NavLink to="/" end className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Home</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/get-started" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Get started</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/dashboard" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Dashboard</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/vault" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Vault</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/earn" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Earn Max Yield</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/xcm" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>XCM</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/features" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Features</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/bridge" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Bridge</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1, flexShrink: 0 }} />
+        <NavLink to="/security" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none", flexShrink: 0 })}>Security</NavLink>
       </div>
     </header>
   );

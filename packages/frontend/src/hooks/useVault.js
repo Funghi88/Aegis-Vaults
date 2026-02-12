@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Contract, JsonRpcProvider } from "ethers";
+import { Contract, JsonRpcProvider, BrowserProvider } from "ethers";
 import { addressToEvm } from "@polkadot/util-crypto";
 import { VAULT_ADDRESS, RPC_URL } from "../config";
 import { useVaultRefresh } from "../context/VaultRefreshContext";
@@ -25,6 +25,14 @@ function toEvmAddress(address) {
   }
 }
 
+/** Use MetaMask when available to avoid CORS on deployed sites (GitHub Pages, Vercel). */
+function getProvider() {
+  if (typeof window !== "undefined" && window.ethereum) {
+    return new BrowserProvider(window.ethereum);
+  }
+  return new JsonRpcProvider(RPC_URL);
+}
+
 export function useVault(address) {
   const { trigger } = useVaultRefresh();
   const [state, setState] = useState({
@@ -40,7 +48,7 @@ export function useVault(address) {
   const refetch = useCallback(() => setRefreshKey((k) => k + 1), []);
 
   const fetchVault = useCallback(async (evmAddr) => {
-    const provider = new JsonRpcProvider(RPC_URL);
+    const provider = getProvider();
     const vault = new Contract(VAULT_ADDRESS, ABI, provider);
     const [collateral, debt, health, guardianAddr, stablecoinAddr] = await Promise.all([
       vault.getCollateral(evmAddr),
