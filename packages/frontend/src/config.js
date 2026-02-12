@@ -21,8 +21,8 @@ export const CHAIN_NAMES = {
   137: "Polygon",
 };
 
-/** Native token symbol (DEV for local Hardhat, PAS for Paseo). */
-export const NATIVE_TOKEN = import.meta.env.VITE_NATIVE_TOKEN || "DEV";
+/** Native token symbol (DEV for local Hardhat, PAS for Paseo/Polkadot Hub TestNet). */
+export const NATIVE_TOKEN = import.meta.env.VITE_NATIVE_TOKEN || "PAS";
 
 /** WebSocket endpoint for XCM (Polkadot.js API). */
 export const WS_ENDPOINT = import.meta.env.VITE_WS_ENDPOINT || "wss://paseo-asset-hub-rpc.polkadot.io";
