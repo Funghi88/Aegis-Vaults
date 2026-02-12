@@ -4,10 +4,10 @@ Reference for AegisVault deployment and integration (agent, frontend).
 
 ## Deployed addresses
 
-| Network                    | Runtime | AegisVault | Guardian (constructor) |
-|----------------------------|---------|------------|------------------------|
-| Polkadot Hub TestNet (Paseo) | REVM    | *(paste from deploy output)* | *(paste from deploy output)* |
-| Revive (local)             | PVM     | 0xa44639cd0d0e6c6607491088c9c549e184456122 | 0x8eaf... (call initializeGuardian) |
+| Network                    | Runtime | AegisVault | pUSD | Guardian (constructor) |
+|----------------------------|---------|------------|------|------------------------|
+| Polkadot Hub TestNet (Paseo) | REVM    | 0xBa9Fa63E2F9E776f7F08371FeC95dD1FCd34E137 | 0x11a8cAAD58BedBCbe0471d0dDf64516624d66279 | *(paste from deploy output)* |
+| Revive (local)             | PVM     | 0xa44639cd0d0e6c6607491088c9c549e184456122 | — | 0x8eaf... (call initializeGuardian) |
 
 **Revive status:** pallet_revive is experimental. As of 2025, it may not be on public Asset Hub Paseo. Use a local substrate-revive-node or wait for mainnet. See `deploy:revive` script.
 
@@ -19,14 +19,23 @@ Reference for AegisVault deployment and integration (agent, frontend).
 
 From repo root:
 
+**Vault only (no pUSD):**
 ```bash
 cd packages/contracts
 export PRIVATE_KEY=0x...          # deployer (never commit)
 export GUARDIAN_ADDRESS=0x...    # optional; defaults to deployer
-npx hardhat run scripts/deploy.ts --network polkadotTestnet
+npm run deploy:testnet
 ```
 
-Then paste the printed `AegisVault` and `Guardian` addresses into the table above.
+**Vault + pUSD stablecoin:**
+```bash
+cd packages/contracts
+export PRIVATE_KEY=0x...
+export GUARDIAN_ADDRESS=0x...    # optional
+npm run deploy:pusd:testnet
+```
+
+Then paste the printed `AegisVault`, `pUSD`, and `Guardian` addresses into the table above.
 
 ## ABI
 

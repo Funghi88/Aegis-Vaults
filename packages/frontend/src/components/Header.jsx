@@ -30,7 +30,7 @@ export function Header() {
           }}
         >
           <div style={{ flex: 1, minWidth: 0 }}>
-            <NavLink to="/" end className="link-hover" style={navLightStyle}>Homepage</NavLink>
+            <NavLink to="/get-started" className="link-hover" style={navLightStyle}>Get started</NavLink>
           </div>
 
           <Link to="/" className="section-title link-hover" style={{ fontSize: "1.5rem", fontWeight: 400, color: "var(--dark)", letterSpacing: "0.02em", textTransform: "uppercase", flexShrink: 0 }}>
@@ -89,6 +89,8 @@ export function Header() {
         }}
       >
         <NavLink to="/" end className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Home</NavLink>
+        <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
+        <NavLink to="/get-started" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Get started</NavLink>
         <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />
         <NavLink to="/dashboard" className="link-hover" style={({ isActive }) => ({ ...navDarkStyle, textDecoration: isActive ? "underline" : "none" })}>Dashboard</NavLink>
         <span className="nav-divider" style={{ margin: "0", background: "rgba(255,255,255,0.3)", opacity: 1 }} />

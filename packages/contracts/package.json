@@ -7,6 +7,8 @@
     "test": "hardhat test",
     "deploy": "hardhat run scripts/deploy.ts",
     "deploy:testnet": "hardhat run scripts/deploy.ts --network polkadotTestnet",
+    "deploy:pusd": "hardhat run scripts/deploy-with-pusd.ts",
+    "deploy:pusd:testnet": "hardhat run scripts/deploy-with-pusd.ts --network polkadotTestnet",
     "clean": "hardhat clean",
     "compile:revive": "npx ts-node scripts/compile-revive.ts",
     "deploy:revive": "npx ts-node scripts/deploy-revive.ts",

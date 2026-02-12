@@ -9,6 +9,7 @@ const ABI = [
   "function getDebt(address) view returns (uint256)",
   "function getHealthFactor(address) view returns (uint256)",
   "function guardian() view returns (address)",
+  "function stablecoin() view returns (address)",
 ];
 
 function toEvmAddress(address) {
@@ -38,16 +39,31 @@ export function useVault(address) {
 
   const refetch = useCallback(() => setRefreshKey((k) => k + 1), []);
 
+  const fetchVault = useCallback(async (evmAddr) => {
+    const provider = new JsonRpcProvider(RPC_URL);
+    const vault = new Contract(VAULT_ADDRESS, ABI, provider);
+    const [collateral, debt, health, guardianAddr, stablecoinAddr] = await Promise.all([
+      vault.getCollateral(evmAddr),
+      vault.getDebt(evmAddr),
+      vault.getHealthFactor(evmAddr),
+      vault.guardian(),
+      vault.stablecoin(),
+    ]);
+    const guardian = guardianAddr && guardianAddr !== "0x0000000000000000000000000000000000000000" ? guardianAddr.toLowerCase() : null;
+    const stablecoin = stablecoinAddr && stablecoinAddr !== "0x0000000000000000000000000000000000000000" ? stablecoinAddr.toLowerCase() : null;
+    return { collateral: collateral.toString(), debt: debt.toString(), healthFactor: health.toString(), guardian, stablecoin };
+  }, []);
+
   useEffect(() => {
     if (!address) {
-      setState({ collateral: null, debt: null, healthFactor: null, guardian: null, loading: false, error: null });
+      setState({ collateral: null, debt: null, healthFactor: null, guardian: null, stablecoin: null, loading: false, error: null });
       return;
     }
 
     let cancelled = false;
     const evmAddr = toEvmAddress(address);
     if (!evmAddr) {
-      setState({ collateral: null, debt: null, healthFactor: null, guardian: null, loading: false, error: "Invalid address" });
+      setState({ collateral: null, debt: null, healthFactor: null, guardian: null, stablecoin: null, loading: false, error: "Invalid address" });
       return;
     }
 
@@ -55,24 +71,9 @@ export function useVault(address) {
 
     (async () => {
       try {
-        const provider = new JsonRpcProvider(RPC_URL);
-        const vault = new Contract(VAULT_ADDRESS, ABI, provider);
-        const [collateral, debt, health, guardianAddr] = await Promise.all([
-          vault.getCollateral(evmAddr),
-          vault.getDebt(evmAddr),
-          vault.getHealthFactor(evmAddr),
-          vault.guardian(),
-        ]);
-        const guardian = guardianAddr && guardianAddr !== "0x0000000000000000000000000000000000000000" ? guardianAddr.toLowerCase() : null;
-        if (!cancelled) {
-          setState({
-            collateral: collateral.toString(),
-            debt: debt.toString(),
-            healthFactor: health.toString(),
-            guardian,
-            loading: false,
-            error: null,
-          });
+        const data = await fetchVault(evmAddr);
+        if (!cancelled && data) {
+          setState({ ...data, loading: false, error: null });
         }
       } catch (e) {
         if (!cancelled) {
@@ -81,6 +82,7 @@ export function useVault(address) {
             debt: null,
             healthFactor: null,
             guardian: null,
+            stablecoin: null,
             loading: false,
             error: e.message || "Vault fetch failed",
           });
@@ -88,8 +90,24 @@ export function useVault(address) {
       }
     })();
 
-    return () => (cancelled = true);
-  }, [address, refreshKey, trigger]);
+    const POLL_MS = 10000;
+    const id = setInterval(async () => {
+      if (cancelled) return;
+      try {
+        const data = await fetchVault(evmAddr);
+        if (!cancelled && data) {
+          setState((s) => ({ ...s, ...data, loading: false, error: null }));
+        }
+      } catch {
+        // Keep previous state on poll error
+      }
+    }, POLL_MS);
+
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [address, refreshKey, trigger, fetchVault]);
 
   const healthPercent = state.healthFactor
     ? Math.min(200, Number(state.healthFactor) / 1e16).toFixed(1)

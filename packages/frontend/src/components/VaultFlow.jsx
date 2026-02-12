@@ -50,7 +50,8 @@ async function ensureChain() {
 
 export function VaultFlow() {
   const { address, connect } = useWallet();
-  const { collateral, debt, healthPercent, loading, refetch, guardian } = useVault(address);
+  const { collateral, debt, healthPercent, loading, refetch, guardian, stablecoin } = useVault(address);
+  const hasPUSD = !!stablecoin;
   const { success, error: toastError } = useToast();
   const { triggerRefresh } = useVaultRefresh();
   const [depositAmount, setDepositAmount] = useState("");
@@ -156,6 +157,13 @@ export function VaultFlow() {
       const provider = new BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const vault = new Contract(VAULT_ADDRESS, ABI, signer);
+      if (hasPUSD) {
+        const erc20Abi = ["function approve(address spender, uint256 amount) returns (bool)"];
+        const token = new Contract(stablecoin, erc20Abi, signer);
+        const amountWei = parseEther(repayAmount);
+        const approveTx = await token.approve(VAULT_ADDRESS, amountWei);
+        await approveTx.wait();
+      }
       const tx = await vault.repay(parseEther(repayAmount));
       await tx.wait();
       setRepayAmount("");
@@ -261,7 +269,7 @@ export function VaultFlow() {
               Deposit & Mint
             </h2>
             <p style={{ color: "var(--muted)", fontWeight: 300, marginTop: "0.75rem", fontSize: "0.95rem" }}>
-              Deposit {NATIVE_TOKEN} and mint stablecoin debt.
+              Deposit {NATIVE_TOKEN} and mint {hasPUSD ? "pUSD" : "debt"}.
             </p>
           </div>
           <div style={{ textAlign: "center" }}>
@@ -381,7 +389,7 @@ export function VaultFlow() {
               </button>
 
               <div>
-                <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 300, marginBottom: "0.5rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Mint (debt)</label>
+                <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 300, marginBottom: "0.5rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Mint (debt{hasPUSD ? " → pUSD" : ""})</label>
                 <input
                   type="text"
                   placeholder="0"
@@ -402,7 +410,7 @@ export function VaultFlow() {
               {VAULT_HAS_REPAY ? (
                 <>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 300, marginBottom: "0.5rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Repay (reduce debt)</label>
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 300, marginBottom: "0.5rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Repay (reduce debt{hasPUSD ? " — uses your pUSD" : ""})</label>
                     <input
                       type="text"
                       placeholder="0"
