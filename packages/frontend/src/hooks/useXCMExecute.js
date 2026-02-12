@@ -88,7 +88,15 @@ export function useXCMExecute() {
       const feeAssetItem = 0;
       const weightLimit = { Unlimited: null };
 
-      const tx = apiInstance.tx.polkadotXcm.limitedTeleportAssets(
+      // Use polkadotXcm (Asset Hub) or xcmPallet (some runtimes)
+      const xcmPallet = apiInstance.tx.polkadotXcm ?? apiInstance.tx.xcmPallet;
+      if (!xcmPallet?.limitedTeleportAssets) {
+        setLoading(false);
+        setError("XCM pallet not found on this chain. Ensure you're connected to Paseo Asset Hub.");
+        return null;
+      }
+
+      const tx = xcmPallet.limitedTeleportAssets(
         destination,
         beneficiary,
         assets,
@@ -101,7 +109,7 @@ export function useXCMExecute() {
       const injector = await web3FromAddress(polkadotAddress);
       if (!injector?.signer) {
         setLoading(false);
-        setError("Wallet signer not found. Try disconnecting and reconnecting, or unlock your Polkadot extension.");
+        setError("Wallet signer not found. Unlock your Polkadot extension (Talisman/Polkadot.js), then disconnect and reconnect.");
         return null;
       }
 
@@ -113,7 +121,11 @@ export function useXCMExecute() {
           }
         }).catch((e) => {
           setLoading(false);
-          setError(e.message || "XCM execution failed");
+          const msg = e?.message || String(e);
+          const friendly = msg.includes("rejected") || msg.includes("cancelled")
+            ? "Transaction rejected in wallet. Approve in the extension popup to continue."
+            : msg;
+          setError(friendly);
           reject(e);
         });
       });

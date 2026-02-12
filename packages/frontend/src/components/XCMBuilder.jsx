@@ -134,8 +134,13 @@ export function XCMBuilder() {
                     className="btn-primary"
                     style={{ padding: "1rem 2rem", background: "var(--accent)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
                   >
-                    {xcmLoading ? "Signing…" : "Execute XCM"}
+                    {xcmLoading ? "Check wallet popup…" : "Execute XCM"}
                   </button>
+                  {xcmLoading && (
+                    <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.5rem" }}>
+                      Look for Talisman/Polkadot.js window — it may be behind this tab.
+                    </p>
+                  )}
                   <button
                     onClick={disconnectPolkadot}
                     className="link-hover"
