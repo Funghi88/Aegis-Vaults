@@ -59,17 +59,38 @@ export function Header() {
                 )}
               </>
             )}
-            <button
-              onClick={address ? disconnect : connect}
-              className="link-hover"
-              style={{ ...navLightStyle, background: "none", border: "none", cursor: "pointer" }}
-            >
-              {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Connect wallet"}
-            </button>
-            <span className="nav-divider" style={{ margin: "0 0.25rem" }} />
-            <Link to="/earn" className="btn-primary" style={{ padding: "0.4rem 0.9rem", background: "var(--dark)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none" }}>
-              Earn Max Yield
-            </Link>
+            {address ? (
+              <>
+                <span
+                  style={{
+                    ...navLightStyle,
+                    fontFamily: "monospace",
+                    fontSize: "0.8rem",
+                    padding: "0.25rem 0.5rem",
+                    background: "rgba(0,0,0,0.06)",
+                    borderRadius: 4,
+                  }}
+                  title={address}
+                >
+                  {address.slice(0, 6)}...{address.slice(-4)}
+                </span>
+                <button
+                  onClick={disconnect}
+                  className="link-hover"
+                  style={{ ...navLightStyle, background: "none", border: "none", cursor: "pointer", fontSize: "0.7rem", color: "var(--muted)" }}
+                >
+                  Disconnect
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={connect}
+                className="link-hover"
+                style={{ ...navLightStyle, background: "none", border: "none", cursor: "pointer" }}
+              >
+                Connect wallet
+              </button>
+            )}
           </div>
         </div>
       </div>
