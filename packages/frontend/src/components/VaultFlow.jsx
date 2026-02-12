@@ -161,6 +161,7 @@ export function VaultFlow() {
       setRepayAmount("");
       refetch();
       triggerRefresh();
+      setTimeout(() => { refetch(); triggerRefresh(); }, 3000);
       success("Repay successful");
     } catch (e) {
       console.error(e);
@@ -171,8 +172,20 @@ export function VaultFlow() {
     }
   };
 
+  // Max withdraw: must keep health >= 150% (collateral/debt >= 1.5). If no debt, withdraw all.
+  const minRatio = 1.5;
+  const maxWithdraw = debtNum > 0
+    ? Math.max(0, collNum - debtNum * minRatio)
+    : collNum;
+
   const handleWithdraw = async () => {
     if (!canTransact || !withdrawAmount || !VAULT_HAS_WITHDRAW) return;
+    const amt = parseFloat(withdrawAmount) || 0;
+    if (amt > maxWithdraw) {
+      setTxError(`Max withdraw: ${maxWithdraw.toFixed(2)} ${NATIVE_TOKEN}. Repay debt first or withdraw less to keep health ≥ 150%.`);
+      toastError(`Max withdraw: ${maxWithdraw.toFixed(2)} ${NATIVE_TOKEN}`);
+      return;
+    }
     setTxError(null);
     setWithdrawPending(true);
     try {
@@ -187,11 +200,16 @@ export function VaultFlow() {
       setWithdrawAmount("");
       refetch();
       triggerRefresh();
+      setTimeout(() => { refetch(); triggerRefresh(); }, 3000);
       success("Withdraw successful");
     } catch (e) {
       console.error(e);
-      setTxError(e.message || "Withdraw failed");
-      toastError(e.message || "Withdraw failed");
+      const msg = e.message || "Withdraw failed";
+      const friendly = msg.includes("e247bc92") || msg.includes("UnhealthyPosition")
+        ? `Withdraw would make position unhealthy. Max: ${maxWithdraw.toFixed(2)} ${NATIVE_TOKEN}. Repay debt first or withdraw less.`
+        : msg;
+      setTxError(friendly);
+      toastError(friendly);
     } finally {
       setWithdrawPending(false);
     }
@@ -417,10 +435,13 @@ export function VaultFlow() {
                       onChange={(e) => setWithdrawAmount(e.target.value)}
                       style={{ width: "100%", padding: "0.75rem 1rem", border: "1px solid rgba(0, 0, 0, 0.15)", fontSize: "1rem", fontFamily: "inherit" }}
                     />
+                    {debtNum > 0 && (
+                      <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.25rem" }}>Max: {maxWithdraw.toFixed(2)} {NATIVE_TOKEN} (health must stay ≥ 150%)</p>
+                    )}
                   </div>
                   <button
                     onClick={handleWithdraw}
-                    disabled={withdrawPending || !withdrawAmount || Number(collateral || 0) === 0}
+                    disabled={withdrawPending || !withdrawAmount || Number(collateral || 0) === 0 || (parseFloat(withdrawAmount) || 0) > maxWithdraw}
                     className="btn-primary"
                     style={{ padding: "1rem 2rem", background: "var(--dark)", color: "white", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
                   >
