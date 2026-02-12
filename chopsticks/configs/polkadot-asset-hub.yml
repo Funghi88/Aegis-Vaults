@@ -1,0 +1,6 @@
+# Fork at an older block to avoid UnresolvedFunctionImport (ext_storage_proof_size_*).
+# Latest runtime uses host APIs Chopsticks doesn't implement. Remove or increase block if this fails.
+endpoint: wss://polkadot-asset-hub-rpc.polkadot.io
+block: 6000000
+mock-signature-host: true
+db: ./db.asset-hub.sqlite

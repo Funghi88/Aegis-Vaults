@@ -1,0 +1,14 @@
+{
+  "name": "@aegis-vaults/chopsticks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx chopsticks -c configs/polkadot-asset-hub.yml",
+    "xcm:asset-hub-only": "npx chopsticks -c configs/polkadot-asset-hub.yml",
+    "xcm": "npx chopsticks xcm --r=configs/polkadot.yml --p=configs/polkadot-asset-hub.yml --p=configs/moonbeam.yml --p=configs/hydradx.yml"
+  },
+  "devDependencies": {
+    "@acala-network/chopsticks": "latest"
+  }
+}

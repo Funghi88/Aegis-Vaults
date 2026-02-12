@@ -1,0 +1,3 @@
+endpoint: wss://wss.api.moonbeam.network
+mock-signature-host: true
+db: ./db.moonbeam.sqlite

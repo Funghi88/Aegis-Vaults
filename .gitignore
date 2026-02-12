@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Secrets (never commit)
+.env
+.env.local
+.env.*.local
+
+# Build / cache
+dist/
+cache/
+coverage/
+coverage.json
+artifacts/
+typechain-types/
+*.log
+.turbo/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store

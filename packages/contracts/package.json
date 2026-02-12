@@ -1,0 +1,26 @@
+{
+  "name": "@aegis-vaults/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:testnet": "hardhat run scripts/deploy.ts --network polkadotTestnet",
+    "clean": "hardhat clean",
+    "compile:revive": "npx ts-node scripts/compile-revive.ts",
+    "deploy:revive": "npx ts-node scripts/deploy-revive.ts",
+    "init:revive": "npx ts-node scripts/init-aegis-revive.ts",
+    "guardian:demo": "hardhat run scripts/guardian-demo.ts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@parity/hardhat-polkadot-resolc": "^0.2.3",
+    "@parity/resolc": "^1.0.0",
+    "@polkadot/api": "^16.5.4",
+    "@polkadot/keyring": "^14.0.1",
+    "dotenv": "^17.2.4",
+    "hardhat": "^2.27.0",
+    "solc": "0.8.28"
+  }
+}

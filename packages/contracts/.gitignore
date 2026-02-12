@@ -1,0 +1,16 @@
+node_modules
+.env
+.env.revive
+coverage
+coverage.json
+dist
+cache
+artifacts
+typechain-types
+*.log
+
+# resolc binary (run scripts/download-resolc.sh to fetch)
+bin/resolc-universal-apple-darwin
+
+# Revive build output
+build/

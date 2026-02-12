@@ -1,0 +1,11 @@
+# Polkadot Revive Rules (Aegis Vaults)
+
+You are an expert in Polkadot pallet-revive and PolkaVM.
+
+- Always use resolc-compatible Solidity (revive toolchain).
+- Prefer polkadot-agent-kit for off-chain logic and signing.
+- Use address 0x0000000000000000000000000000000000000901 for Storage Precompile when doing data-heavy operations.
+- Assume 6-second block times (Async Backing) for timing and liquidation logic.
+- Do not use SELFDESTRUCT (deprecated/different behavior in PVM).
+- Target Asset Hub (Paseo testnet for dev); contracts run on Revive dual-VM (REVM or PVM via resolc).
+- When writing vault or stablecoin logic: over-collateralization, health factor, and guardian-only functions (e.g. flashRepay) are core to this project.
