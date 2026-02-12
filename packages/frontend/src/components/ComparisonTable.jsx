@@ -7,7 +7,15 @@ const ROWS = [
   { metric: "Time to best yield", traditional: "8+ min", aegis: "6 sec" },
 ];
 
-const cellBorder = "1px solid rgba(0,0,0,0.12)";
+const cardStyle = {
+  overflow: "hidden",
+  background: "white",
+  border: "1px solid rgba(0,0,0,0.08)",
+  borderRadius: 8,
+  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+};
+const cellBorder = "1px solid rgba(0,0,0,0.08)";
+const cellPadding = "1.25rem 1.5rem";
 
 export function ComparisonTable() {
   return (
@@ -19,21 +27,21 @@ export function ComparisonTable() {
             Traditional vs Aegis
           </h2>
         </div>
-        <div className="card-hover fade-up" style={{ overflow: "hidden", background: "white", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 8, boxShadow: "0 24px 64px rgba(0,0,0,0.08)" }}>
+        <div className="card-hover fade-up" style={cardStyle}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "1rem" }}>
             <thead>
-              <tr style={{ background: "var(--light)" }}>
-                <th style={{ padding: "1.25rem 1.5rem", textAlign: "left", fontWeight: 600, color: "var(--muted)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder, borderRight: cellBorder }}>Metric</th>
-                <th style={{ padding: "1.25rem 1.5rem", textAlign: "center", fontWeight: 600, color: "var(--muted)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder, borderRight: cellBorder }}>Traditional</th>
-                <th style={{ padding: "1.25rem 1.5rem", textAlign: "center", fontWeight: 600, color: "var(--accent)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder }}>Aegis</th>
+              <tr>
+                <th style={{ padding: cellPadding, textAlign: "left", fontWeight: 600, color: "var(--muted)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder, borderRight: cellBorder }}>Metric</th>
+                <th style={{ padding: cellPadding, textAlign: "center", fontWeight: 600, color: "var(--muted)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder, borderRight: cellBorder }}>Traditional</th>
+                <th style={{ padding: cellPadding, textAlign: "center", fontWeight: 600, color: "var(--accent)", fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: cellBorder }}>Aegis</th>
               </tr>
             </thead>
             <tbody>
               {ROWS.map((r, i) => (
                 <tr key={r.metric}>
-                  <td style={{ padding: "1.25rem 1.5rem", fontWeight: 500, color: "var(--dark)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.metric}</td>
-                  <td style={{ padding: "1.25rem 1.5rem", textAlign: "center", color: "var(--muted)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.traditional}</td>
-                  <td style={{ padding: "1.25rem 1.5rem", textAlign: "center", fontWeight: 600, color: "var(--accent)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none" }}>{r.aegis}</td>
+                  <td style={{ padding: cellPadding, fontWeight: 500, color: "var(--dark)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.metric}</td>
+                  <td style={{ padding: cellPadding, textAlign: "center", color: "var(--muted)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.traditional}</td>
+                  <td style={{ padding: cellPadding, textAlign: "center", fontWeight: 600, color: "var(--accent)", borderBottom: i < ROWS.length - 1 ? cellBorder : "none" }}>{r.aegis}</td>
                 </tr>
               ))}
             </tbody>

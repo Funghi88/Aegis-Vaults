@@ -17,10 +17,32 @@ export function BenchmarkTable() {
     return { ...c, apy };
   });
 
+  const cardStyle = {
+    overflow: "hidden",
+    overflowX: "auto",
+    background: "white",
+    border: "1px solid rgba(0,0,0,0.08)",
+    borderRadius: 8,
+    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+  };
+  const cellBorder = "1px solid rgba(0,0,0,0.08)";
+  const cellPadding = "1.25rem 1.5rem";
+
   return (
-    <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+    <div
+      style={{
+        marginTop: "8rem",
+        marginLeft: "-1.5rem",
+        marginRight: "-1.5rem",
+        paddingTop: "4.5rem",
+        paddingBottom: "3rem",
+        paddingLeft: "1.5rem",
+        paddingRight: "1.5rem",
+        borderTop: "2px solid var(--text)",
+      }}
+    >
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
-        <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+        <div style={{ marginBottom: "2rem", textAlign: "center" }}>
           <span className="section-label">Benchmark</span>
           <h2 className="fade-up" style={{ fontSize: "2rem", fontWeight: 400, color: "var(--dark)", marginTop: "0.5rem" }}>
             Competitive Comparison
@@ -29,27 +51,27 @@ export function BenchmarkTable() {
             Compare collateral ratio, APY, and TVL across Polkadot DeFi vaults.
           </p>
         </div>
-        <div className="fade-up card-hover" style={{ overflowX: "auto", background: "white", border: "1px solid rgba(0,0,0,0.08)" }}>
+        <div className="fade-up card-hover" style={cardStyle}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid rgba(0,0,0,0.1)" }}>
-                <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "var(--dark)" }}>Protocol</th>
-                <th style={{ padding: "1rem", textAlign: "right", fontWeight: 600, color: "var(--dark)" }}>Min. Collateral</th>
-                <th style={{ padding: "1rem", textAlign: "right", fontWeight: 600, color: "var(--dark)" }}>Best APY</th>
-                <th style={{ padding: "1rem", textAlign: "right", fontWeight: 600, color: "var(--dark)" }}>TVL</th>
-                <th style={{ padding: "1rem", textAlign: "left", fontWeight: 600, color: "var(--dark)" }}>Chain</th>
+              <tr>
+                <th style={{ padding: cellPadding, textAlign: "left", fontWeight: 600, color: "var(--dark)", borderBottom: cellBorder, borderRight: cellBorder }}>Protocol</th>
+                <th style={{ padding: cellPadding, textAlign: "right", fontWeight: 600, color: "var(--dark)", borderBottom: cellBorder, borderRight: cellBorder }}>Min. Collateral</th>
+                <th style={{ padding: cellPadding, textAlign: "right", fontWeight: 600, color: "var(--dark)", borderBottom: cellBorder, borderRight: cellBorder }}>Best APY</th>
+                <th style={{ padding: cellPadding, textAlign: "right", fontWeight: 600, color: "var(--dark)", borderBottom: cellBorder, borderRight: cellBorder }}>TVL</th>
+                <th style={{ padding: cellPadding, textAlign: "left", fontWeight: 600, color: "var(--dark)", borderBottom: cellBorder }}>Chain</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => (
-                <tr key={r.name} style={{ borderBottom: i < rows.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none" }}>
-                  <td style={{ padding: "1rem", fontWeight: r.name === "Aegis Vaults" ? 600 : 400 }}>{r.name}</td>
-                  <td style={{ padding: "1rem", textAlign: "right" }}>{r.minCollateral}%</td>
-                  <td style={{ padding: "1rem", textAlign: "right", color: r.name === "Aegis Vaults" ? "var(--accent)" : "inherit" }}>
+                <tr key={r.name}>
+                  <td style={{ padding: cellPadding, fontWeight: r.name === "Aegis Vaults" ? 600 : 400, borderBottom: i < rows.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.name}</td>
+                  <td style={{ padding: cellPadding, textAlign: "right", borderBottom: i < rows.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.minCollateral}%</td>
+                  <td style={{ padding: cellPadding, textAlign: "right", color: r.name === "Aegis Vaults" ? "var(--accent)" : "inherit", borderBottom: i < rows.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>
                     {r.apy != null ? `${r.apy.toFixed(2)}%` : "—"}
                   </td>
-                  <td style={{ padding: "1rem", textAlign: "right" }}>{r.tvl}</td>
-                  <td style={{ padding: "1rem" }}>{r.chain}</td>
+                  <td style={{ padding: cellPadding, textAlign: "right", borderBottom: i < rows.length - 1 ? cellBorder : "none", borderRight: cellBorder }}>{r.tvl}</td>
+                  <td style={{ padding: cellPadding, borderBottom: i < rows.length - 1 ? cellBorder : "none" }}>{r.chain}</td>
                 </tr>
               ))}
             </tbody>

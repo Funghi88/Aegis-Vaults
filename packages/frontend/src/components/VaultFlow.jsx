@@ -333,8 +333,8 @@ export function VaultFlow() {
                 Refresh balance
               </button>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: hasPreview ? "0.5rem" : "2rem" }}>
-              <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.1s" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: hasPreview ? "0.5rem" : "2rem", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
+              <div className="fade-up card-hover" style={{ padding: "2rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.1s" }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Collateral</p>
                 <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
                   {hasPreview ? previewCollateral.toFixed(2) : formatWei(collateral)} {NATIVE_TOKEN}
@@ -342,7 +342,7 @@ export function VaultFlow() {
                 {hasPreview && depositNum > 0 && <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontWeight: 300 }}>+{depositNum} on deposit</p>}
                 {hasPreview && withdrawNum > 0 && <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontWeight: 300 }}>−{withdrawNum} on withdraw</p>}
               </div>
-              <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.2s" }}>
+              <div className="fade-up card-hover" style={{ padding: "2rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.2s" }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Debt</p>
                 <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--dark)", marginBottom: "0.25rem" }}>
                   {hasPreview ? previewDebt.toFixed(2) : formatWei(debt)}
@@ -350,7 +350,7 @@ export function VaultFlow() {
                 {hasPreview && mintNum > 0 && <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontWeight: 300 }}>+{mintNum} on mint</p>}
                 {hasPreview && repayNum > 0 && <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontWeight: 300 }}>−{repayNum} on repay</p>}
               </div>
-              <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.3s" }}>
+              <div className="fade-up card-hover" style={{ padding: "2rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.3s" }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Health</p>
                 <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
                   {hasPreview && previewHealth != null
@@ -415,8 +415,8 @@ export function VaultFlow() {
                 <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>Confirm in MetaMask</span>
               </div>
             )}
-          <div className="fade-up card-hover" style={{ maxWidth: 560, margin: "0 auto", padding: "2.5rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)" }}>
-            <div style={{ display: "grid", gap: "1.25rem" }}>
+          <div className="fade-up card-hover" style={{ maxWidth: 560, margin: "0 auto", padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)" }}>
+            <div style={{ display: "grid", gap: "1rem" }}>
               <div>
                 <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 300, marginBottom: "0.5rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Deposit ({NATIVE_TOKEN})</label>
                 <input

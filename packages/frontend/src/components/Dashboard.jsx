@@ -69,7 +69,7 @@ export function Dashboard() {
 
 function Card({ title, value, subtitle, accent, delay, onSubtitleClick }) {
   return (
-    <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: delay }}>
+    <div className="fade-up card-hover" style={{ padding: "2rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: delay }}>
       <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
         {title}
       </p>
