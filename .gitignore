@@ -26,3 +26,5 @@ typechain-types/
 # Excluded from repo (internal docs)
 docs/DEPLOY.md
 docs/ROADMAP-ALIGNMENT.md
+docs/ROADMAP.md
+docs/SECURITY.md
