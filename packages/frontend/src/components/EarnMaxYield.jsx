@@ -53,8 +53,11 @@ export function EarnMaxYield() {
               <h3 style={{ fontSize: "2rem", fontWeight: 400, color: "var(--dark)", marginBottom: "0.5rem" }}>
                 {selected.name}
               </h3>
-              <p style={{ fontSize: "1.5rem", fontWeight: 600, color: "var(--accent)", marginBottom: "1.5rem" }}>
+              <p style={{ fontSize: "1.5rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
                 {(Number(selected.apy) || 0).toFixed(2)}% APY
+              </p>
+              <p style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--muted)", marginBottom: "1.5rem" }}>
+                APY (Annual Percentage Yield) is the estimated yearly return on your deposited assets.
               </p>
               <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                 {selected.paraId != null && (

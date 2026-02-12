@@ -32,7 +32,11 @@ jobs:
       - name: Install and build
         env:
           VITE_BASE_PATH: /Aegis-Vaults/
+          VITE_VAULT_ADDRESS: "0xa44639cd0d0e6c6607491088c9c549e184456122"
           VITE_VAULT_TYPE: full
+          VITE_RPC_URL: https://services.polkadothub-rpc.com/testnet
+          VITE_CHAIN_ID: "420420417"
+          VITE_NATIVE_TOKEN: PAS
         run: |
           cd packages/frontend
           npm ci
