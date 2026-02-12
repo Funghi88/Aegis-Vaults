@@ -71,9 +71,17 @@ async function promptHidden(promptText) {
 }
 
 // Prefer WS_ENDPOINTS (list) so CLI overrides .env; else WS_ENDPOINT (single)
-const WS_ENDPOINT_RAW = (process.env.WS_ENDPOINTS || process.env.WS_ENDPOINT || "ws://127.0.0.1:8000").trim();
-const WS_ENDPOINTS = WS_ENDPOINT_RAW.split(",").map((s) => s.trim()).filter(Boolean);
-const WS_ENDPOINT = WS_ENDPOINTS[0]; // primary for logging
+const PASEO_FALLBACKS = ["wss://sys.ibp.network/asset-hub-paseo", "wss://asset-hub-paseo-rpc.polkadot.io"];
+let WS_ENDPOINTS;
+if (process.env.WS_ENDPOINTS) {
+  WS_ENDPOINTS = process.env.WS_ENDPOINTS.split(",").map((s) => s.trim()).filter(Boolean);
+} else if (process.env.WS_ENDPOINT) {
+  const primary = process.env.WS_ENDPOINT.trim();
+  WS_ENDPOINTS = [primary, ...PASEO_FALLBACKS.filter((u) => u !== primary)];
+} else {
+  WS_ENDPOINTS = ["ws://127.0.0.1:8000", ...PASEO_FALLBACKS];
+}
+const WS_ENDPOINT = WS_ENDPOINTS[0];
 const SENDER_SEED = normalizeMnemonic(process.env.SENDER_SEED);
 const RECIPIENT_RAW = (process.env.RECIPIENT_SS58 || "").trim().replace(/\s/g, "");
 const DEST_PARA_ID = parseInt(process.env.DEST_PARA_ID || "4001", 10); // 0 = relay; 4001 = Pop (Paseo); 2034 = Hydration (mainnet)

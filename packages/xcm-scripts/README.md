@@ -27,9 +27,9 @@ If you have PAS on **Paseo Asset Hub** (from the faucet), run against testnet so
 ```bash
 cd packages/xcm-scripts
 
-# Use comma-separated list — script tries each if 1006 occurs
-export WS_ENDPOINTS="wss://asset-hub-paseo-rpc.polkadot.io,wss://polkadot-asset-hub-paseo-rpc.dwellir.com,wss://sys.ibp.network/asset-hub-paseo"
-# Or single: export WS_ENDPOINT="wss://asset-hub-paseo-rpc.polkadot.io"
+# Script auto-adds fallbacks when WS_ENDPOINT is set. IBP often more reliable than polkadot.io.
+export WS_ENDPOINT="wss://sys.ibp.network/asset-hub-paseo"
+# Or explicit list: export WS_ENDPOINTS="wss://sys.ibp.network/asset-hub-paseo,wss://asset-hub-paseo-rpc.polkadot.io"
 
 export RECIPIENT_SS58="5EWkRqk3q5gGQkctCNmXCtAZxR3wnV9BzdQQSs8VhrE1z2vN"
 

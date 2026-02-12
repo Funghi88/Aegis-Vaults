@@ -3,7 +3,7 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { web3Enable, web3Accounts, web3FromAddress } from "@polkadot/extension-dapp";
 import { decodeAddress } from "@polkadot/util-crypto";
 
-import { WS_ENDPOINT } from "../config";
+import { WS_ENDPOINTS } from "../config";
 const APP_NAME = "Aegis Vaults";
 
 export function useXCMExecute() {
@@ -47,15 +47,23 @@ export function useXCMExecute() {
 
     let apiInstance = api;
     if (!apiInstance) {
-      try {
-        const provider = new WsProvider(WS_ENDPOINT);
-        apiInstance = await ApiPromise.create({ provider });
-        await apiInstance.isReady;
-        setApi(apiInstance);
-      } catch (e) {
-        setLoading(false);
-        setError("Failed to connect to chain: " + (e.message || e));
-        return null;
+      let lastErr;
+      for (const endpoint of WS_ENDPOINTS) {
+        try {
+          const provider = new WsProvider(endpoint, 8000);
+          apiInstance = await ApiPromise.create({ provider });
+          await apiInstance.isReady;
+          setApi(apiInstance);
+          break;
+        } catch (e) {
+          lastErr = e;
+          if (WS_ENDPOINTS.indexOf(endpoint) < WS_ENDPOINTS.length - 1) {
+            continue;
+          }
+          setLoading(false);
+          setError("Failed to connect to chain: " + (lastErr?.message || lastErr) + ". Try again or check network.");
+          return null;
+        }
       }
     }
 

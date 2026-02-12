@@ -24,5 +24,7 @@ export const CHAIN_NAMES = {
 /** Native token symbol (DEV for local Hardhat, PAS for Paseo/Polkadot Hub TestNet). */
 export const NATIVE_TOKEN = import.meta.env.VITE_NATIVE_TOKEN || "PAS";
 
-/** WebSocket endpoint for XCM (Polkadot.js API). */
-export const WS_ENDPOINT = import.meta.env.VITE_WS_ENDPOINT || "wss://paseo-asset-hub-rpc.polkadot.io";
+/** WebSocket endpoint(s) for XCM. Comma-separated = try in order. */
+const WS_RAW = import.meta.env.VITE_WS_ENDPOINTS || import.meta.env.VITE_WS_ENDPOINT || "wss://sys.ibp.network/asset-hub-paseo,wss://asset-hub-paseo-rpc.polkadot.io";
+export const WS_ENDPOINTS = WS_RAW.split(",").map((s) => s.trim()).filter(Boolean);
+export const WS_ENDPOINT = WS_ENDPOINTS[0];
