@@ -22,3 +22,7 @@ typechain-types/
 
 # OS
 .DS_Store
+
+# Excluded from repo (internal docs)
+docs/DEPLOY.md
+docs/ROADMAP-ALIGNMENT.md

@@ -60,13 +60,12 @@ aegis-vaults/
 │   └── xcm-scripts/   # XCM transfer (ReserveTransferAssets) from Asset Hub
 ├── chopsticks/        # Local XCM fork (Asset Hub)
 ├── agent/             # AI Oracle, vault monitor, flashRepay
-└── docs/              # contracts.md, ROADMAP-ALIGNMENT.md
+└── docs/              # contracts.md, async-backing.md
 ```
 
 ---
 
 ## Links
 
-- [docs/ROADMAP-ALIGNMENT.md](docs/ROADMAP-ALIGNMENT.md) — Status, users, product story, config
 - [docs/contracts.md](docs/contracts.md) — ABIs, addresses, guardian
 - Polkadot Asset Hub, Revive, Paseo testnet — see official Polkadot docs
