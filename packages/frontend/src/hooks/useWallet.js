@@ -27,6 +27,37 @@ export function useWallet() {
     setLoading(false);
   }, []);
 
+  // Restore connection on load (no popup). MetaMask and Polkadot remember per-site connections.
+  const restoreConnection = useCallback(async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: "eth_accounts" });
+        if (accounts?.[0]) {
+          setAddress(accounts[0]);
+          fetchChainId();
+          return;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    if (isWeb3Injected) {
+      try {
+        const accounts = await web3Accounts();
+        if (accounts?.length) {
+          setAddress(accounts[0].address);
+          return;
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }, [fetchChainId]);
+
+  useEffect(() => {
+    restoreConnection();
+  }, [restoreConnection]);
+
   useEffect(() => {
     if (!window.ethereum) return;
     fetchChainId();
@@ -34,6 +65,16 @@ export function useWallet() {
     window.ethereum.on?.("chainChanged", handler);
     return () => window.ethereum.removeListener?.("chainChanged", handler);
   }, [fetchChainId]);
+
+  // Re-check accounts when MetaMask emits account change (e.g. user switches account)
+  useEffect(() => {
+    if (!window.ethereum) return;
+    const handler = (accounts) => {
+      setAddress(accounts?.[0] || null);
+    };
+    window.ethereum.on?.("accountsChanged", handler);
+    return () => window.ethereum.removeListener?.("accountsChanged", handler);
+  }, []);
 
   const connectMetaMask = async () => {
     if (!window.ethereum) return null;

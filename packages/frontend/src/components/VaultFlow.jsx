@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Contract, BrowserProvider, parseEther } from "ethers";
 import { useWallet } from "../hooks/useWallet";
 import { useVault } from "../hooks/useVault";
-import { useWalletBalance } from "../hooks/useWalletBalance";
 import { useToast } from "../context/ToastContext";
 import { useVaultRefresh } from "../context/VaultRefreshContext";
 import { VAULT_ADDRESS, RPC_URL, CHAIN_ID, NATIVE_TOKEN, VAULT_HAS_REPAY, VAULT_HAS_WITHDRAW } from "../config";
@@ -52,7 +51,6 @@ async function ensureChain() {
 export function VaultFlow() {
   const { address, connect } = useWallet();
   const { collateral, debt, healthPercent, loading, refetch, guardian, stablecoin } = useVault(address);
-  const { nativeBalance, pusdBalance, loading: walletLoading, refetch: refetchWallet } = useWalletBalance(address, stablecoin);
   const hasPUSD = !!stablecoin;
   const { success, error: toastError } = useToast();
   const { triggerRefresh } = useVaultRefresh();
@@ -326,24 +324,13 @@ export function VaultFlow() {
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
               <button
                 type="button"
-                onClick={() => { refetch(); refetchWallet(); triggerRefresh(); }}
+                onClick={() => { refetch(); triggerRefresh(); }}
                 style={{ fontSize: "0.75rem", color: "var(--muted)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
               >
                 Refresh balance
               </button>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: hasPreview ? "0.5rem" : "2rem" }}>
-              <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.05s" }}>
-                <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Wallet (remaining)</p>
-                <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
-                  {walletLoading ? "…" : formatWei(nativeBalance)} {NATIVE_TOKEN}
-                </p>
-                {hasPUSD && (
-                  <p style={{ fontSize: "0.9rem", fontWeight: 400, color: "var(--dark)" }}>
-                    {walletLoading ? "…" : formatWei(pusdBalance)} pUSD
-                  </p>
-                )}
-              </div>
               <div className="fade-up card-hover" style={{ padding: "1.75rem", background: "white", border: "1px solid rgba(0, 0, 0, 0.08)", animationDelay: "0.1s" }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--muted)", marginBottom: "0.5rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>Collateral</p>
                 <p style={{ fontSize: "2rem", fontWeight: 600, color: "var(--accent)", marginBottom: "0.25rem" }}>
